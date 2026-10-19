@@ -32,11 +32,45 @@
 
 ```text
 LEGAL_MIND/
-├── backend/           # FastAPI + LangGraph 后端
-│   ├── app/           # 业务代码（api/agents/rag/models 等）
-│   └── main.py        # 后端入口
-├── frontend/          # 原生 JS 前端
-└── docker-compose.yml # PostgreSQL + Redis
+├── backend/                    # FastAPI + LangGraph 后端
+│   ├── app/
+│   │   ├── api/                # 认证、聊天 SSE、文书生成、案例检索接口
+│   │   ├── agents/             # 意图识别、检索、问答、文书与工作流编排
+│   │   ├── db/                 # Tortoise ORM 初始化与连接管理
+│   │   ├── llm/                # LLM 客户端、提示词、Postgres checkpointer
+│   │   ├── models/             # 用户、案例、会话、文书数据模型
+│   │   ├── rag/                # Embedding、向量库、检索与重排
+│   │   ├── scripts/            # seed_cases.py 与 build_index.py
+│   │   ├── services/           # 案例查询服务
+│   │   ├── test/               # 后端测试
+│   │   ├── utils/              # 密码哈希与 JWT 工具
+│   │   ├── config.py           # 环境变量配置
+│   │   └── dependencies.py     # 当前用户认证依赖
+│   ├── main.py                 # FastAPI 入口与 lifespan
+│   ├── pyproject.toml          # 后端依赖定义
+│   ├── uv.lock                 # 依赖版本锁定
+│   ├── .python-version         # Python 版本
+│   └── .env.example            # 环境变量模板
+├── frontend/                   # 原生 JS 单页前端
+│   ├── src/                    # 页面逻辑与 SSE 解析
+│   ├── tests/                  # 前端单元测试
+│   ├── index.html
+│   ├── styles.css
+│   ├── server.mjs              # 零依赖静态文件服务器
+│   └── package.json
+├── docs/images/                # README 功能截图
+├── docker-compose.yml          # PostgreSQL + Redis
+├── README.md
+└── .gitignore
+```
+
+请求链路：
+
+```text
+浏览器 → frontend/src/app.js（发起 SSE 请求）
+      → backend/app/api/chat.py（返回 text/event-stream）
+      → app/agents/work_flow.py（意图识别 → 案例检索 → 问答生成）
+      → PostgreSQL（会话记忆）+ ChromaDB（案例向量检索）
 ```
 
 ## 环境要求
