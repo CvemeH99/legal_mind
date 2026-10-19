@@ -143,3 +143,27 @@ yarn dev
 ```
 
 浏览器访问 `http://localhost:5173`。前端默认请求 `http://localhost:8000/api`。
+
+## 后端依赖管理
+
+后端依赖统一由 uv 管理，配置入口是 `backend/pyproject.toml`，锁定版本记录在 `backend/uv.lock`。
+
+- 安装或同步依赖：在 `backend` 目录执行 `uv sync`
+- 新增运行依赖：`uv add 包名`，会同时更新 `pyproject.toml` 和 `uv.lock`
+- 新增开发依赖：`uv add --dev 包名`
+- 在项目虚拟环境中执行命令：`uv run python xxx.py`
+- CI 或离线环境按锁文件安装：`uv sync --frozen`
+
+不要手动修改 `.venv` 里的包，也不要提交 `.venv/`。调整依赖后，把 `pyproject.toml` 和 `uv.lock` 一起提交。
+
+## 测试
+
+```powershell
+cd frontend
+yarn test
+```
+
+## 说明
+
+- `.env`、`models/`、`data/`、`.venv/` 等本地文件不会提交，首次运行需按上述步骤重新生成。
+- 生产环境请替换默认数据库口令与 `SECRET_KEY`，并使用强随机值。
