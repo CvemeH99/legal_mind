@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="LegalMind 智能法律工作台，提供法律问答、文书生成与案例检索。"
+    />
+    <title>LegalMind | 智能法律工作台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="i-scale" viewBox="0 0 24 24">
+        <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+        <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+        <path d="M7 21h10" />
+        <path d="M12 3v18" />
+        <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
+      </symbol>
+      <symbol id="i-message" viewBox="0 0 24 24">
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+        <path d="M8 12h.01M12 12h.01M16 12h.01" />
+      </symbol>
+      <symbol id="i-file" viewBox="0 0 24 24">
+        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+        <path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8" />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.3-4.3" />
+      </symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5v14" />
+      </symbol>
+      <symbol id="i-send" viewBox="0 0 24 24">
+        <path d="m22 2-7 20-4-9-9-4Z" />
+        <path d="M22 2 11 13" />
+      </symbol>
+      <symbol id="i-sparkles" viewBox="0 0 24 24">
+        <path d="m12 3-1.9 5.1L5 10l5.1 1.9L12 17l1.9-5.1L19 10l-5.1-1.9Z" />
+        <path d="M5 3v4M3 5h4M19 17v4M17 19h4" />
+      </symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24">
+        <rect width="14" height="14" x="8" y="8" rx="2" />
+        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+      </symbol>
+      <symbol id="i-download" viewBox="0 0 24 24">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+      </symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24">
+        <path d="M3 6h18M8 6V4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2M19 6l-1 14c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2L5 6M10 11v6M14 11v6" />
+      </symbol>
+      <symbol id="i-logout" viewBox="0 0 24 24">
+        <path d="M10 17l5-5-5-5M15 12H3M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+      </symbol>
+      <symbol id="i-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M20 21a8 8 0 0 0-16 0" />
+      </symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24">
+        <rect width="18" height="11" x="3" y="11" rx="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      </symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24">
+        <rect width="20" height="16" x="2" y="4" rx="2" />
+        <path d="m22 7-10 6L2 7" />
+      </symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24">
+        <path d="M20 13c0 5-3.5 7.5-7.7 8.9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V5.6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.3a1.5 1.5 0 0 1 1.6 0C14.5 3.4 17 4.6 19 4.6a1 1 0 0 1 1 1Z" />
+        <path d="m9 12 2 2 4-4" />
+      </symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18M6 6l12 12" />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </symbol>
+      <symbol id="i-book" viewBox="0 0 24 24">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+      </symbol>
+      <symbol id="i-gavel" viewBox="0 0 24 24">
+        <path d="m14 13-7.5 7.5a2.1 2.1 0 0 1-3-3L11 10M15 9l6 6M16 8l2-2M19 11l2-2M20 4l2-2M22 6l2-2" />
+      </symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24">
+        <path d="M8 2v4M16 2v4M3 10h18" />
+        <rect width="18" height="18" x="3" y="4" rx="2" />
+      </symbol>
+      <symbol id="i-map" viewBox="0 0 24 24">
+        <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+        <circle cx="12" cy="10" r="3" />
+      </symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24">
+        <path d="M20 11a8.1 8.1 0 0 0-15.5-2M4 4v5h5M4 13a8.1 8.1 0 0 0 15.5 2M20 20v-5h-5" />
+      </symbol>
+      <symbol id="i-info" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 16v-4M12 8h.01" />
+      </symbol>
+      <symbol id="i-quote" viewBox="0 0 24 24">
+        <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v5c0 1.25.75 2 2 2h4M14 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v5c0 1.25.75 2 2 2h4" />
+      </symbol>
+      <symbol id="i-panel" viewBox="0 0 24 24">
+        <rect width="18" height="18" x="3" y="3" rx="2" />
+        <path d="M9 3v18" />
+      </symbol>
+    </svg>
+
+    <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+    <section id="auth-screen" class="auth-screen">
+      <div class="auth-story">
+        <a class="brand brand--light" href="#" aria-label="LegalMind 首页">
+          <span class="brand__mark"><svg><use href="#i-scale"></use></svg></span>
+          <span class="brand__type">
+            <strong>LEGALMIND</strong>
+            <small>智能法律工作台</small>
+          </span>
+        </a>
+
+        <div class="auth-story__content">
+          <p class="eyebrow eyebrow--light">AI LEGAL INTELLIGENCE</p>
+          <h1>让每一次判断，<br />都有据可依。</h1>
+          <p class="auth-story__lead">
+            汇集法律问答、文书起草与判例检索，让复杂事务回到清晰、可靠的证据与逻辑。
+          </p>
+          <div class="auth-story__points">
+            <div>
+              <span>01</span>
+              <p><strong>有据可循</strong>回答自动关联参考案例与法律依据</p>
+            </div>
+            <div>
+              <span>02</span>
+              <p><strong>专业交付</strong>从法律分析到规范文书的一体化工作流</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-story__footer">
+          <span class="status-dot"></span>
+          <span>法律智能服务运行中</span>
+          <span class="auth-story__rule"></span>
+          <span>LEGALMIND / 2026</span>
+        </div>
+      </div>
+
+      <div class="auth-panel">
+        <div class="auth-panel__mobile-brand">
+          <span class="brand__mark"><svg><use href="#i-scale"></use></svg></span>
+          <strong>LEGALMIND</strong>
+        </div>
+        <div class="auth-box">
+          <div class="auth-heading">
+            <p class="eyebrow">WELCOME BACK</p>
+            <h2 id="auth-title">登录工作台</h2>
+            <p id="auth-subtitle">继续处理您的法律事务与咨询记录。</p>
+          </div>
+
+          <div class="auth-tabs" role="tablist">
+            <button class="auth-tab is-active" data-auth-tab="login" type="button">登录</button>
+            <button class="auth-tab" data-auth-tab="register" type="button">注册</button>
+          </div>
+
+          <form id="login-form" class="auth-form">
+            <label class="field">
+              <span>用户名</span>
+              <span class="field__control">
+                <svg><use href="#i-user"></use></svg>
+                <input name="username" autocomplete="username" placeholder="请输入用户名" required />
+              </span>
+            </label>
+            <label class="field">
+              <span>密码</span>
+              <span class="field__control">
+                <svg><use href="#i-lock"></use></svg>
+                <input
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  placeholder="请输入密码"
+                  required
+                />
+              </span>
+            </label>
+            <button class="button button--primary button--wide" type="submit">
+              <span>进入工作台</span>
+              <svg><use href="#i-chevron"></use></svg>
+            </button>
+          </form>
+
+          <form id="register-form" class="auth-form" hidden>
+            <div class="field-row">
+              <label class="field">
+                <span>用户名</span>
+                <span class="field__control">
+                  <svg><use href="#i-user"></use></svg>
+                  <input name="username" autocomplete="username" placeholder="登录用户名" required />
+                </span>
+              </label>
+              <label class="field">
+                <span>称呼</span>
+                <span class="field__control">
+                  <svg><use href="#i-user"></use></svg>
+                  <input name="nickname" autocomplete="name" placeholder="如何称呼您" />
+                </span>
+              </label>
+            </div>
+            <label class="field">
+              <span>邮箱</span>
+              <span class="field__control">
+                <svg><use href="#i-mail"></use></svg>
+                <input name="email" type="email" autocomplete="email" placeholder="name@example.com" required />
+              </span>
+            </label>
+            <label class="field">
+              <span>密码</span>
+              <span class="field__control">
+                <svg><use href="#i-lock"></use></svg>
+                <input
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  minlength="6"
+                  placeholder="至少 6 位字符"
+                  required
+                />
+              </span>
+            </label>
+            <button class="button button--primary button--wide" type="submit">
+              <span>创建账户</span>
+              <svg><use href="#i-chevron"></use></svg>
+            </button>
+          </form>
+
+          <p class="auth-legal">
+            登录即表示您了解，AI 生成内容仅供法律事务辅助，不替代执业律师的正式法律意见。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div id="app-shell" class="app-shell" hidden>
+      <aside id="sidebar" class="sidebar">
+        <div class="sidebar__head">
+          <a class="brand brand--light" href="#" data-view-link="chat" aria-label="LegalMind">
+            <span class="brand__mark"><svg><use href="#i-scale"></use></svg></span>
+            <span class="brand__type">
+              <strong>LEGALMIND</strong>
+              <small>智能法律工作台</small>
+            </span>
+          </a>
+          <button id="sidebar-close" class="icon-button icon-button--dark sidebar__close" type="button" title="收起菜单">
+            <svg><use href="#i-x"></use></svg>
+          </button>
+        </div>
+
+        <nav class="main-nav" aria-label="主要导航">
+          <button class="nav-item is-active" data-view-link="chat" type="button">
+            <svg><use href="#i-message"></use></svg>
+            <span>智能问答</span>
+            <span class="nav-item__arrow"><svg><use href="#i-chevron"></use></svg></span>
+          </button>
+          <button class="nav-item" data-view-link="documents" type="button">
+            <svg><use href="#i-file"></use></svg>
+            <span>文书生成</span>
+            <span class="nav-item__arrow"><svg><use href="#i-chevron"></use></svg></span>
+          </button>
+          <button class="nav-item" data-view-link="cases" type="button">
+            <svg><use href="#i-search"></use></svg>
+            <span>案例检索</span>
+            <span class="nav-item__arrow"><svg><use href="#i-chevron"></use></svg></span>
+          </button>
+        </nav>
+
+        <div class="sidebar__section">
+          <div class="sidebar__section-head">
+            <span>最近会话</span>
+            <span class="sidebar__section-actions">
+              <button id="new-chat" class="icon-button icon-button--dark" type="button" title="新建会话">
+                <svg><use href="#i-plus"></use></svg>
+              </button>
+              <button id="refresh-sessions" class="icon-button icon-button--dark" type="button" title="刷新会话">
+                <svg><use href="#i-refresh"></use></svg>
+              </button>
+            </span>
+          </div>
+          <div id="session-list" class="session-list">
+            <div class="session-skeleton"></div>
+            <div class="session-skeleton"></div>
+          </div>
+        </div>
+
+        <div class="sidebar__footer">
+          <div class="user-summary">
+            <span id="user-avatar" class="avatar">L</span>
+            <span class="user-summary__text">
+              <strong id="user-name">LegalMind 用户</strong>
+              <small>专业版工作区</small>
+            </span>
+            <button id="logout-button" class="icon-button icon-button--dark" type="button" title="退出登录">
+              <svg><use href="#i-logout"></use></svg>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div class="topbar__left">
+            <button id="sidebar-open" class="icon-button topbar__menu" type="button" title="展开菜单">
+              <svg><use href="#i-menu"></use></svg>
+            </button>
+            <div>
+              <p id="page-kicker" class="topbar__kicker">LEGAL CONSULTATION</p>
+              <h1 id="page-title">智能问答</h1>
+            </div>
+          </div>
+          <div class="topbar__right">
+            <span class="connection-pill" id="connection-pill">
+              <span class="status-dot"></span>
+              <span>服务已连接</span>
+            </span>
+            <span class="today-label" id="today-label"></span>
+          </div>
+        </header>
+
+        <section id="view-chat" class="view view--chat is-active" data-view="chat">
+          <div class="chat-layout">
+            <section class="conversation">
+              <div id="chat-scroll" class="chat-scroll">
+                <div id="chat-welcome" class="chat-welcome">
+                  <div class="chat-welcome__mark"><svg><use href="#i-scale"></use></svg></div>
+                  <p class="eyebrow">LEGAL INTELLIGENCE</p>
+                  <h2>今天需要解决什么法律问题？</h2>
+                  <p>
+                    描述您的事实经过、争议焦点或具体诉求。我会结合相关案例，给出结构化分析与行动建议。
+                  </p>
+                  <div class="prompt-grid">
+                    <button class="prompt-card" data-prompt="婚后共同购买的房产，离婚时应当如何分割？">
+                      <span class="prompt-card__icon"><svg><use href="#i-scale"></use></svg></span>
+                      <span>
+                        <strong>婚姻财产</strong>
+                        <small>离婚房产分割的法律依据</small>
+                      </span>
+                      <svg class="prompt-card__arrow"><use href="#i-chevron"></use></svg>
+                    </button>
+                    <button class="prompt-card" data-prompt="公司拖欠工资，员工被迫离职后可以主张哪些赔偿？">
+                      <span class="prompt-card__icon"><svg><use href="#i-book"></use></svg></span>
+                      <span>
+                        <strong>劳动争议</strong>
+                        <small>拖欠工资与经济补偿范围</small>
+                      </span>
+                      <svg class="prompt-card__arrow"><use href="#i-chevron"></use></svg>
+                    </button>
+                    <button class="prompt-card" data-prompt="交通事故造成十级伤残，赔偿项目包括哪些？">
+                      <span class="prompt-card__icon"><svg><use href="#i-gavel"></use></svg></span>
+                      <span>
+                        <strong>事故赔偿</strong>
+                        <small>交强险与侵权责任分担</small>
+                      </span>
+                      <svg class="prompt-card__arrow"><use href="#i-chevron"></use></svg>
+                    </button>
+                    <button class="prompt-card" data-prompt="民间借贷只有转账记录，没有借条，能否起诉？">
+                      <span class="prompt-card__icon"><svg><use href="#i-file"></use></svg></span>
+                      <span>
+                        <strong>债权纠纷</strong>
+                        <small>证据链与诉讼可行性分析</small>
+                      </span>
+                      <svg class="prompt-card__arrow"><use href="#i-chevron"></use></svg>
+                    </button>
+                  </div>
+                </div>
+                <div id="message-list" class="message-list"></div>
+              </div>
+
+              <div class="composer-wrap">
+                <form id="chat-form" class="composer">
+                  <textarea
+                    id="chat-input"
+                    rows="1"
+                    maxlength="4000"
+                    placeholder="输入法律问题，Shift + Enter 换行..."
+                    aria-label="输入法律问题"
+                  ></textarea>
+                  <div class="composer__footer">
+                    <span class="composer__hint">
+                      <svg><use href="#i-shield"></use></svg>
+                      内容仅用于法律事务辅助
+                    </span>
+                    <button id="chat-send" class="send-button" type="submit" title="发送">
+                      <svg><use href="#i-send"></use></svg>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </section>
+
+            <aside class="context-panel">
+              <div class="context-panel__head">
+                <div>
+                  <p class="eyebrow">CONTEXT</p>
+                  <h3>本次咨询</h3>
+                </div>
+                <span id="chat-status" class="context-status">等待提问</span>
+              </div>
+              <div class="context-panel__body">
+                <div class="context-stat">
+                  <span>会话轮次</span>
+                  <strong id="turn-count">0</strong>
+                </div>
+                <div class="context-stat">
+                  <span>参考材料</span>
+                  <strong id="source-count">0</strong>
+                </div>
+                <div class="context-section">
+                  <div class="context-section__title">
+                    <svg><use href="#i-quote"></use></svg>
+                    <span>引用来源</span>
+                  </div>
+                  <div id="source-list" class="source-list">
+                    <p class="context-empty">生成回答后，这里将展示检索到的相关案例。</p>
+                  </div>
+                </div>
+                <div class="context-note">
+                  <svg><use href="#i-info"></use></svg>
+                  <p>重要法律决策请交由执业律师结合原始材料复核。</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="view-documents" class="view view--documents" data-view="documents">
+          <div class="document-layout">
+            <section class="document-brief">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">DOCUMENT BRIEF</p>
+                  <h2>生成法律文书</h2>
+                  <p>填写关键信息，由 AI 按标准结构起草，生成后仍可继续编辑。</p>
+                </div>
+              </div>
+
+              <form id="document-form" class="document-form">
+                <div class="field">
+                  <span>文书类型</span>
+                  <div id="document-type-grid" class="document-types">
+                    <label class="document-type is-active">
+                      <input type="radio" name="document_type" value="起诉状" checked />
+                      <span><svg><use href="#i-gavel"></use></svg></span>
+                      <strong>起诉状</strong>
+                      <small>民事纠纷起诉</small>
+                    </label>
+                    <label class="document-type">
+                      <input type="radio" name="document_type" value="答辩状" />
+                      <span><svg><use href="#i-shield"></use></svg></span>
+                      <strong>答辩状</strong>
+                      <small>应诉答辩意见</small>
+                    </label>
+                    <label class="document-type">
+                      <input type="radio" name="document_type" value="合同" />
+                      <span><svg><use href="#i-file"></use></svg></span>
+                      <strong>合同</strong>
+                      <small>交易条款起草</small>
+                    </label>
+                    <label class="document-type">
+                      <input type="radio" name="document_type" value="律师函" />
+                      <span><svg><use href="#i-mail"></use></svg></span>
+                      <strong>律师函</strong>
+                      <small>正式催告告知</small>
+                    </label>
+                    <label class="document-type">
+                      <input type="radio" name="document_type" value="上诉状" />
+                      <span><svg><use href="#i-scale"></use></svg></span>
+                      <strong>上诉状</strong>
+                      <small>不服一审裁判</small>
+                    </label>
+                  </div>
+                </div>
+
+                <div id="document-fields" class="document-fields"></div>
+
+                <label class="field">
+                  <span>补充说明</span>
+                  <span class="field__control field__control--textarea">
+                    <textarea
+                      id="document-query"
+                      name="query"
+                      rows="4"
+                      placeholder="补充案件背景、核心诉求以及希望强调的事实..."
+                      required
+                    ></textarea>
+                  </span>
+                </label>
+
+                <label class="switch-row">
+                  <span>
+                    <strong>关联相似案例</strong>
+                    <small>检索案例作为起草时的参考材料</small>
+                  </span>
+                  <input id="use-references" type="checkbox" checked />
+                  <span class="switch"></span>
+                </label>
+
+                <button id="document-generate" class="button button--primary button--wide" type="submit">
+                  <svg><use href="#i-sparkles"></use></svg>
+                  <span>开始生成</span>
+                </button>
+              </form>
+            </section>
+
+            <section class="document-output">
+              <div class="document-output__toolbar">
+                <div>
+                  <span class="output-label">DOCUMENT PREVIEW</span>
+                  <strong id="document-output-title">起诉状</strong>
+                </div>
+                <div class="toolbar-actions">
+                  <button id="copy-document" class="icon-button" type="button" title="复制全文">
+                    <svg><use href="#i-copy"></use></svg>
+                  </button>
+                  <button id="download-document" class="icon-button" type="button" title="下载文本">
+                    <svg><use href="#i-download"></use></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div id="document-empty" class="document-empty">
+                <div class="document-empty__paper">
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <h3>文书将在这里呈现</h3>
+                <p>完善左侧信息后开始生成，结果支持即时编辑、复制与下载。</p>
+              </div>
+
+              <textarea
+                id="document-result"
+                class="document-result"
+                aria-label="文书生成结果"
+                spellcheck="false"
+                hidden
+              ></textarea>
+            </section>
+          </div>
+        </section>
+
+        <section id="view-cases" class="view view--cases" data-view="cases">
+          <div class="cases-header">
+            <div class="section-heading section-heading--wide">
+              <div>
+                <p class="eyebrow">PRECEDENT SEARCH</p>
+                <h2>从判例中找到答案</h2>
+                <p>输入案情关键词，按案件类型或审理法院进行精确筛选。</p>
+              </div>
+            </div>
+            <form id="case-search-form" class="case-search">
+              <span class="case-search__icon"><svg><use href="#i-search"></use></svg></span>
+              <input id="case-query" name="query" placeholder="例如：离婚房产分割、交通事故赔偿..." required />
+              <select id="case-type" name="case_type" aria-label="案件类型">
+                <option value="">全部类型</option>
+                <option value="民事">民事</option>
+                <option value="劳动争议">劳动争议</option>
+                <option value="刑事">刑事</option>
+                <option value="行政">行政</option>
+              </select>
+              <button class="button button--primary" type="submit">
+                <svg><use href="#i-search"></use></svg>
+                <span>检索案例</span>
+              </button>
+            </form>
+          </div>
+
+          <div class="cases-toolbar">
+            <div id="case-result-meta">
+              <span class="status-dot status-dot--muted"></span>
+              <span>输入关键词开始检索</span>
+            </div>
+            <div class="case-suggestions">
+              <span>热门：</span>
+              <button type="button" data-case-query="离婚财产分割">离婚财产分割</button>
+              <button type="button" data-case-query="拖欠工资">拖欠工资</button>
+              <button type="button" data-case-query="交通事故赔偿">交通事故赔偿</button>
+            </div>
+          </div>
+
+          <div id="case-results" class="case-results">
+            <div class="cases-empty">
+              <span class="cases-empty__mark"><svg><use href="#i-book"></use></svg></span>
+              <h3>检索相关司法案例</h3>
+              <p>结果将包含案号、审理法院、裁判日期、案情摘要和引用法条。</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="case-drawer" class="drawer" aria-hidden="true">
+      <div class="drawer__backdrop" data-close-drawer></div>
+      <aside class="drawer__panel">
+        <div class="drawer__head">
+          <div>
+            <span class="output-label">CASE DETAIL</span>
+            <h2>案例详情</h2>
+          </div>
+          <button class="icon-button" type="button" data-close-drawer title="关闭详情">
+            <svg><use href="#i-x"></use></svg>
+          </button>
+        </div>
+        <div id="case-detail" class="drawer__content"></div>
+      </aside>
+    </div>
+
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
