@@ -1,6 +1,19 @@
 # LegalMind 法律智能助手
 
-基于 FastAPI、LangGraph、PostgreSQL 与 ChromaDB 的法律问答与文书生成应用，前端为零依赖单页应用。
+面向法律咨询场景的智能助手：后端基于 FastAPI 与 LangGraph 编排工作流，结合 RAG、ChromaDB、BGE 与 BM25 完成案例检索，支持 SSE 流式问答、法律文书生成和案例检索。
+
+前端使用原生 JavaScript 与 HTML/CSS，零构建、零运行时依赖；数据层采用 PostgreSQL + Tortoise ORM，认证使用 JWT，整体可通过 Docker Compose 一键启动。
+
+## 技术栈
+
+| 层级 | 技术 |
+| --- | --- |
+| 后端 | Python、FastAPI、LangGraph、LangChain |
+| 检索增强 | RAG、ChromaDB、BGE、BM25 |
+| 数据与认证 | PostgreSQL、Tortoise ORM、JWT |
+| 流式交互 | SSE |
+| 前端 | JavaScript、HTML/CSS |
+| 部署 | Docker Compose |
 
 ## 功能展示
 
